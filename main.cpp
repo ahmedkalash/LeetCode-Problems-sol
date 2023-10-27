@@ -653,31 +653,109 @@
     }
 
 
-    vector<int> productExceptSelf(vector<int>& nums) {
-        vector<int> ans(nums.size(),1);
-        ans[0] = 1;
-        for (int i = 1; i <nums.size() ; ++i) {
-            ans[i] = ans[i-1] * nums[i-1];
+
+    bool isValidRow(const vector<char>& row){
+        int nums_count = 0;
+        set<char> nums_set;
+        for (auto ch: row) {
+            if(ch!='.'){
+                nums_count++;
+                nums_set.insert(ch);
+            }
         }
 
+        return nums_set.size() == nums_count;
+    }
 
-        int suffix = 1;
-        for (int i = nums.size()-1; i >=0 ; --i) {
-            ans[i] *=  suffix;
-            suffix*= nums[i];
 
+    bool isValidColumn(vector<vector<char>>& board, int col) {
+        int nums_count = 0;
+        set<char> nums_set;
+
+        for (auto row:board) {
+            if(row[col]!='.'){
+                nums_count++;
+                nums_set.insert(row[col]);
+            }
         }
 
-        return ans;
+        return nums_set.size() == nums_count;
+    }
 
+
+    bool isValidSubBox(vector<vector<char>>& board, int r, int c) {
+        int nums_count = 0;
+        set<char> nums_set;
+        for (int i = r; i <  r+3 ; ++i) {
+            for (int j = c; j < c+3 ; ++j) {
+                if(board[i][j] != '.'){
+                    nums_count++;
+                    nums_set.insert(board[i][j]);
+                }
+            }
+        }
+        return nums_set.size() == nums_count;
     }
 
 
 
 
+    bool isValidSudoku(vector<vector<char>>& board) {
+
+        bool rows_check = true, columns_check = true, sub_box_check = true;
+
+        // check rows
+        for (const auto& row:board) {
+            rows_check &= isValidRow(row);
+        }
+
+        // check columns
+        for (int i = 0; i < board.size(); ++i) {
+            columns_check &= isValidColumn(board, i);
+        }
+
+
+        // check sub-boxes
+        for (int i = 0; i <=6 ; i+=3) {
+            for (int j = 0; j <=6 ;  j+=3) {
+                sub_box_check &= isValidSubBox(board, i, j);
+            }
+        }
+
+        return rows_check && columns_check && sub_box_check;
+    }
+
+
+
     void solve(int testCase){
-        vector<int> vect = {1,2,3,4};
-        print(productExceptSelf(vect));
+//            vector<vector<char>> vect= {
+//                    vector<char>({'.', '.', '4', '.', '.', '.', '6', '3', '.'}),
+//                    vector<char>({'.', '.', '.', '.', '.', '.', '.', '.', '.'}),
+//                    vector<char>({'5', '.', '.', '.', '.', '.', '.', '9', '.'}),
+//                    vector<char>({'.', '.', '.', '5', '6', '.', '.', '.', '.'}),
+//                    vector<char>({'4', '.', '3', '.', '.', '.', '.', '.', '1'}),
+//                    vector<char>({'.', '.', '.', '7', '.', '.', '.', '.', '.'}),
+//                    vector<char>({'.', '.', '.', '5', '.', '.', '.', '.', '.'}),
+//                    vector<char>({'.', '.', '.', '.', '.', '.', '.', '.', '.'}),
+//                    vector<char>({'.', '.', '.', '.', '.', '.', '.', '.', '.'})
+//            };
+
+                  vector<vector<char>> vect= {
+                    vector<char>({'5','3','.','.','7','.','.','.','.'}),
+                    vector<char>({'6','.','.','1','9','5','.','.','.'}),
+                    vector<char>({'.','9','8','.','.','.','.','6','.'}),
+                    vector<char>({'8','.','.','.','6','.','.','.','3'}),
+                    vector<char>({'4','.','.','8','.','3','.','.','1'}),
+                    vector<char>({'7','.','.','.','2','.','.','.','6'}),
+                    vector<char>({'.','6','.','.','.','.','2','8','.'}),
+                    vector<char>({'.','.','.','4','1','9','.','.','5'}),
+                    vector<char>({'.','.','.','.','8','.','.','7','9'})
+            };
+
+
+
+        cout << isValidSudoku(vect);
+
     }
 
 
