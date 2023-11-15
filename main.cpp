@@ -654,107 +654,44 @@
 
 
 
-    bool isValidRow(const vector<char>& row){
-        int nums_count = 0;
-        set<char> nums_set;
-        for (auto ch: row) {
-            if(ch!='.'){
-                nums_count++;
-                nums_set.insert(ch);
+
+    int longestConsecutive(vector<int>& nums) {
+        set<int> freq, starting_points;
+
+        for (auto num: nums) {
+            freq.insert(num);
+        }
+
+        for (auto num: nums) {
+          if(freq.find(num-1) == freq.end()){
+              starting_points.insert(num);
+          }
+        }
+
+        int mx = 0;
+        int ctr = 0;
+
+        for (auto start_point: starting_points) {
+            cout << start_point << el;
+            while (freq.find(start_point++) != freq.end()){
+                ctr++;
+                cout << start_point << ' ' << ctr << el;
             }
+
+            mx = max(mx, ctr);
+            ctr=0;
         }
 
-        return nums_set.size() == nums_count;
+        return mx;
+
+
     }
-
-
-    bool isValidColumn(vector<vector<char>>& board, int col) {
-        int nums_count = 0;
-        set<char> nums_set;
-
-        for (auto row:board) {
-            if(row[col]!='.'){
-                nums_count++;
-                nums_set.insert(row[col]);
-            }
-        }
-
-        return nums_set.size() == nums_count;
-    }
-
-
-    bool isValidSubBox(vector<vector<char>>& board, int r, int c) {
-        int nums_count = 0;
-        set<char> nums_set;
-        for (int i = r; i <  r+3 ; ++i) {
-            for (int j = c; j < c+3 ; ++j) {
-                if(board[i][j] != '.'){
-                    nums_count++;
-                    nums_set.insert(board[i][j]);
-                }
-            }
-        }
-        return nums_set.size() == nums_count;
-    }
-
-
-
-
-    bool isValidSudoku(vector<vector<char>>& board) {
-
-        bool rows_check = true, columns_check = true, sub_box_check = true;
-
-        // check rows
-        for (const auto& row:board) {
-            rows_check &= isValidRow(row);
-        }
-
-        // check columns
-        for (int i = 0; i < board.size(); ++i) {
-            columns_check &= isValidColumn(board, i);
-        }
-
-
-        // check sub-boxes
-        for (int i = 0; i <=6 ; i+=3) {
-            for (int j = 0; j <=6 ;  j+=3) {
-                sub_box_check &= isValidSubBox(board, i, j);
-            }
-        }
-
-        return rows_check && columns_check && sub_box_check;
-    }
-
 
 
     void solve(int testCase){
-//            vector<vector<char>> vect= {
-//                    vector<char>({'.', '.', '4', '.', '.', '.', '6', '3', '.'}),
-//                    vector<char>({'.', '.', '.', '.', '.', '.', '.', '.', '.'}),
-//                    vector<char>({'5', '.', '.', '.', '.', '.', '.', '9', '.'}),
-//                    vector<char>({'.', '.', '.', '5', '6', '.', '.', '.', '.'}),
-//                    vector<char>({'4', '.', '3', '.', '.', '.', '.', '.', '1'}),
-//                    vector<char>({'.', '.', '.', '7', '.', '.', '.', '.', '.'}),
-//                    vector<char>({'.', '.', '.', '5', '.', '.', '.', '.', '.'}),
-//                    vector<char>({'.', '.', '.', '.', '.', '.', '.', '.', '.'}),
-//                    vector<char>({'.', '.', '.', '.', '.', '.', '.', '.', '.'})
-//            };
 
-                  vector<vector<char>> vect= {
-                    vector<char>({'5','3','.','.','7','.','.','.','.'}),
-                    vector<char>({'6','.','.','1','9','5','.','.','.'}),
-                    vector<char>({'.','9','8','.','.','.','.','6','.'}),
-                    vector<char>({'8','.','.','.','6','.','.','.','3'}),
-                    vector<char>({'4','.','.','8','.','3','.','.','1'}),
-                    vector<char>({'7','.','.','.','2','.','.','.','6'}),
-                    vector<char>({'.','6','.','.','.','.','2','8','.'}),
-                    vector<char>({'.','.','.','4','1','9','.','.','5'}),
-                    vector<char>({'.','.','.','.','8','.','.','7','9'})
-            };
-
-
-
-        cout << isValidSudoku(vect);
+        vector<int> nums({0,3,7,2,5,8,4,6,0,1});
+        cout << longestConsecutive(nums);
 
     }
 
