@@ -42,7 +42,7 @@ using namespace std;
 
 
 
-class Solution_1 {
+class Solution{
     /* * *
         * Approach:
         *     * Sort the array

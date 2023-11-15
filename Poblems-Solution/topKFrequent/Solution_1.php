@@ -13,7 +13,7 @@ namespace topKFrequent;
  * */
 
 
-class Solution_1
+class Solution
 {
     /* * *
      * Approach:

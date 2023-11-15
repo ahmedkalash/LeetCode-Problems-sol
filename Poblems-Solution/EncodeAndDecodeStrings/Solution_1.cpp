@@ -42,7 +42,7 @@ using namespace std;
 
 
 
-class Solution_1 {
+class Solution {
     /* * *
         * Approach:
         *   * All we need what is the start and the end of each string
