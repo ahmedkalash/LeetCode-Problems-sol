@@ -42,7 +42,7 @@ using namespace std;
 
 
 
-class Solution_1 {
+class Solution_2 {
     /* * *
         * Approach:
         *   * Determine the starting points

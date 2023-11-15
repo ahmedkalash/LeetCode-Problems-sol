@@ -46,7 +46,9 @@
     ll stringToInt(const string& strNum)
     {
         ll num=0, n=0;
-        for (ll i = (ll)strNum.size()-1; i >=0 ; i--,n++){num+= (strNum[i]-'0') * (ll)pow(10,n);}
+        for (ll i = (ll)strNum.size()-1; i >=0 ; i--,n++){
+            num += (strNum[i]-'0') * (ll)pow(10,n);
+        }
         return num;
     }
     string intToString(ll num)
@@ -654,44 +656,48 @@
 
 
 
-
-    int longestConsecutive(vector<int>& nums) {
-        set<int> freq, starting_points;
-
-        for (auto num: nums) {
-            freq.insert(num);
+    /*
+      * @param strs: a list of strings
+      * @return: encodes a list of strings to a single string.
+      */
+    string encode(vector<string> &strs) {
+        string hash;
+        for (const auto& str: strs) {
+            hash += intToString(str.size()) + '.' +str;
         }
-
-        for (auto num: nums) {
-          if(freq.find(num-1) == freq.end()){
-              starting_points.insert(num);
-          }
-        }
-
-        int mx = 0;
-        int ctr = 0;
-
-        for (auto start_point: starting_points) {
-            cout << start_point << el;
-            while (freq.find(start_point++) != freq.end()){
-                ctr++;
-                cout << start_point << ' ' << ctr << el;
-            }
-
-            mx = max(mx, ctr);
-            ctr=0;
-        }
-
-        return mx;
-
-
+        return hash;
     }
 
+    /*
+     * @param str: A string
+     * @return: decodes a single string to a list of strings
+     */
+    vector<string> decode(string &str) {
+        vector<string> strs;
+        for (int i = 0; i < str.size(); ) {
+            string len_str;
+            while ( str[i]!='.'){
+                len_str+=str[i];
+                i++;
+            }
+            int len_int = stringToInt(len_str);
+
+            string item = str.substr(++i, len_int);
+            strs.push_back(item);
+            i+= len_int ;
+
+        }
+
+        return strs;
+    }
 
     void solve(int testCase){
 
         vector<int> nums({0,3,7,2,5,8,4,6,0,1});
-        cout << longestConsecutive(nums);
+        vector<string> vect({"..qqqsdfsgfas",".sdgf","24aaaasdf.rqwer.teryrsgfas","sssssdfsh.jhdgfhgfas","dddddfsgfdgsgfas" })    ;
+        string encoded = encode( vect);
+        cout << encoded<< el;
+        print(decode( encoded));
 
     }
 
