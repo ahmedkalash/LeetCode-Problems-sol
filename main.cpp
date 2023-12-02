@@ -656,48 +656,33 @@
 
 
 
-    /*
-      * @param strs: a list of strings
-      * @return: encodes a list of strings to a single string.
-      */
-    string encode(vector<string> &strs) {
-        string hash;
-        for (const auto& str: strs) {
-            hash += intToString(str.size()) + '.' +str;
-        }
-        return hash;
-    }
-
-    /*
-     * @param str: A string
-     * @return: decodes a single string to a list of strings
-     */
-    vector<string> decode(string &str) {
-        vector<string> strs;
-        for (int i = 0; i < str.size(); ) {
-            string len_str;
-            while ( str[i]!='.'){
-                len_str+=str[i];
-                i++;
+    vector<int> twoSum(vector<int>& numbers, int target) {
+        int l=0, r =numbers.size()-1;
+        vector<int> ans(2);
+        while (l<r){
+            //cout << l <<  ' ' << r << endl;
+            if(numbers[l]+numbers[r] == target){
+               // cout << l <<  ' ' << r << endl;
+                return vector<int>({ l+1, r+1})  ;
+            }else if(numbers[l]+numbers[r] < target){
+                l++;
+            }else{
+                r--;
             }
-            int len_int = stringToInt(len_str);
-
-            string item = str.substr(++i, len_int);
-            strs.push_back(item);
-            i+= len_int ;
 
         }
+        return ans;
 
-        return strs;
     }
+
+
+
 
     void solve(int testCase){
 
-        vector<int> nums({0,3,7,2,5,8,4,6,0,1});
-        vector<string> vect({"..qqqsdfsgfas",".sdgf","24aaaasdf.rqwer.teryrsgfas","sssssdfsh.jhdgfhgfas","dddddfsgfdgsgfas" })    ;
-        string encoded = encode( vect);
-        cout << encoded<< el;
-        print(decode( encoded));
+        vi input({2,7,11,15});
+
+        print(twoSum(input, 9));
 
     }
 
