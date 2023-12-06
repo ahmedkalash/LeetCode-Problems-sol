@@ -656,22 +656,82 @@
 
 
 
-    vector<int> twoSum(vector<int>& numbers, int target) {
-        int l=0, r =numbers.size()-1;
-        vector<int> ans(2);
-        while (l<r){
-            //cout << l <<  ' ' << r << endl;
-            if(numbers[l]+numbers[r] == target){
-               // cout << l <<  ' ' << r << endl;
-                return vector<int>({ l+1, r+1})  ;
-            }else if(numbers[l]+numbers[r] < target){
-                l++;
-            }else{
-                r--;
+    unordered_set<string> hash_set;
+
+//    vector<vector<int>> twoSum(vector<int>& numbers, int target, int current ) {
+//        int l=0, r = numbers.size()-1;
+//        vector<vector<int>> ans ;
+//        while (l<r){
+//
+//            if(l==current  ){
+//                l++;
+//                continue;
+//            }
+//            if(r==current ){
+//                r--;
+//                continue;
+//            }
+//
+//
+//            if(numbers[l]+numbers[r] == target){
+//                //cout << numbers[l] << " * " << numbers[r] << " * " << numbers[current] << el;
+//                string value = to_string(numbers[l]) + to_string(numbers[r])+ to_string(numbers[current]);
+//                std::sort(value.begin(), value.end());
+//                if(hash_set.find(value) == hash_set.end())
+//                {
+//                    ans.push_back({numbers[l], numbers[r], numbers[current]});
+//                    hash_set.insert(value);
+//                }
+//                 l++;
+//                 r--;
+//
+//
+//            }else if(numbers[l]+numbers[r] < target){
+//                l++;
+//            }else{
+//                r--;
+//            }
+//
+//        }
+//        return ans;
+//    }
+
+
+    vector<vector<int>> threeSum(vector<int>& nums) {
+        std::sort(nums.begin(), nums.end());
+        vector<vector<int>> ans;
+        for (int i = 0; i < nums.size(); ++i) {
+            if(i!=0 && nums[i]==nums[i-1]){ continue;}
+            int l=i+1, r = nums.size()-1;
+            while (l<r){
+                if( l==i){
+                    l++;
+                    continue;
+                }
+                if(r==i){
+                    r--;
+                    continue;
+                }
+
+                int sum = nums[l]+nums[r]+nums[i];
+                if( sum == 0){
+                    ans.push_back({nums[l], nums[r], nums[i]});
+                    r--;
+                    l++;
+                    while (nums[l]==nums[l-1] && l< r){l++;} // you can comment any one of these lines and it will still work
+                    while (nums[r]==nums[r+1] && l< r){r--;} // you can comment any one of these lines and it will still work
+
+                }else if(sum < 0){
+                    l++;
+                }else{
+                    r--;
+                }
+
             }
 
         }
-        return ans;
+
+        return  ans;
 
     }
 
@@ -680,9 +740,10 @@
 
     void solve(int testCase){
 
-        vi input({2,7,11,15});
+         vector<int>  input = {-4, -1, -1, 0, 1, 2 };
 
-        print(twoSum(input, 9));
+         auto ans = threeSum(input);
+         cout << ans.size();
 
     }
 
